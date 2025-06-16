@@ -179,3 +179,51 @@ fn main() {
 ```
 ### Результаты выполненной работы
 [![image.png](https://i.postimg.cc/7YGFR5ww/image.png)](https://postimg.cc/tYbvZCsM)
+
+## Задача 6
+### Постановка задачи
+Реализуйте перечисление DayOfWeek для дней недели. Напишите функцию, которая принимает день недели и возвращает следующий день. Обработайте случаи перехода на следующий день недели, если текущий день– воскресенье.
+### Математическая модель
+--
+### Список идентификаторов
+| Имя       | Тип                  | Смысл                                 |
+| --------- | -------------------- | ------------------------------------- |
+| DayOfWeek | enum                 | Перечисление дней недели              |
+| day       | DayOfWeek (параметр) | Параметр функции next_day             |
+| today     | DayOfWeek            | Переменная, хранящая сегодняшний день |
+| tomorrow  | DayOfWeek            | Переменная, хранящая завтрашний день  |
+### Код программы
+```Rust
+#[derive(Debug)] 
+// Перечисление дней недели
+enum DayOfWeek {
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday,
+}
+
+fn next_day(day: DayOfWeek) -> DayOfWeek {
+    match day {
+        DayOfWeek::Monday => DayOfWeek::Tuesday,
+        DayOfWeek::Tuesday => DayOfWeek::Wednesday,
+        DayOfWeek::Wednesday => DayOfWeek::Tuesday,
+        DayOfWeek::Thursday => DayOfWeek::Friday,
+        DayOfWeek::Friday => DayOfWeek::Saturday,
+        DayOfWeek::Saturday => DayOfWeek::Sunday,
+        DayOfWeek::Sunday => DayOfWeek::Monday,
+    }
+}
+
+fn main() {
+    let today = DayOfWeek::Sunday;
+    println!("Today: {:?}", today);
+    let tomorrow = next_day(today);
+    println!("Yesterday will be: {:?}", tomorrow);
+}
+```
+### Результаты выполненной работы
+[![image.png](https://i.postimg.cc/wvnCxzQS/image.png)](https://postimg.cc/bDHCLKMT)
