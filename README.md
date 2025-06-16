@@ -227,3 +227,156 @@ fn main() {
 ```
 ### Результаты выполненной работы
 [![image.png](https://i.postimg.cc/wvnCxzQS/image.png)](https://postimg.cc/bDHCLKMT)
+
+## Задача 7
+### Постановка задачи
+Создайте структуру Product с полями name, price и category, а также перечисление (enum) Category для категорий товаров. Напишите метод для вывода информации о продукте и ассоциированную функцию для подсчета общей суммы товаров в заданной категории из массива продуктов.
+### Математическая модель
+--
+### Список идентификаторов
+| Имя        | Тип                     | Смысл                                                             |
+| ---------- | ----------------------- | ----------------------------------------------------------------- |
+| Category   | enum                    | Перечисление категорий товаров                                    |
+| Product    | struct                  | Структура, описывающая товар                                      |
+| name       | String (поле Product)   | Название продукта                                                 |
+| price      | f64 (поле Product)      | Цена продукта                                                     |
+| category   | Category (поле Product) | Категория продукта                                                |
+| products   | Vec<Product>            | Переменная в main, вектор тестовых продуктов                      |
+| product    | &Product                | Ссылка на продукт                                                 |
+| sum        | f64                     | Сумма цен в функции total_price                                   |
+| target_cat | Category                | Параметр total_price                                              |
+| total        | f64                   | Сумма цен в функции main                                          |
+
+### Код программы
+```Rust
+// Перечисление всех доступных категорий
+#[derive(Debug)]
+enum Category {
+    Electronics,
+    Clothing,
+    Food,
+    Other,
+}
+
+struct Product {
+    name: String,
+    price: f64,
+    category: Category,
+}
+
+impl Product {
+    fn print_info(&self) {
+        println!("Good: {}", self.name);
+        println!("Price: {:.2}", self.price);
+        println!("Category: {:?}", self.category);  // Используем {:?} для вывода Debug
+    }
+    
+    // Функция для подсчета суммы
+    fn total_price(products: &[Product], target_cat: Category) -> f64 {
+        let mut sum = 0.0;
+        for product in products {
+            match (&product.category, &target_cat) { 
+                (Category::Electronics, Category::Electronics) |
+                (Category::Clothing, Category::Clothing) |
+                (Category::Food, Category::Food) |
+                (Category::Other, Category::Other) => {
+                    sum += product.price;
+                }
+                _ => {}
+            }
+        }
+        sum
+    }
+}
+
+fn main() {
+    // Тестовые продукты
+    let products = vec![
+        Product {
+            name: String::from("Powerbank"),
+            price: 2600.60,
+            category: Category::Electronics,
+        },
+        Product {
+            name: String::from("Microphone"),
+            price: 9999.99,
+            category: Category::Electronics,
+        },
+        Product {
+            name: String::from("Screw"),
+            price: 0.99,
+            category: Category::Other,
+        },
+        Product {
+            name: String::from("Trousers"),
+            price: 1000.00,
+            category: Category::Clothing,
+        },
+    ];
+    
+    products[0].print_info();
+
+    let total = Product::total_price(&products, Category::Electronics);
+    println!("Sum: {:.2}", total);
+}
+```
+### Результаты выполненной работы
+[![image.png](https://i.postimg.cc/W4wzJ9HW/image.png)](https://postimg.cc/NyLB3xYm)
+## Задача 8
+### Постановка задачи
+Создайте структуру Employee с полями name, position, salary, а также перечисление Position для должностей сотрудников. Напишите функцию, которая принимает вектор сотрудников и возвращает вектор сотрудников заданной должности.
+### Математическая модель
+--
+### Список идентификаторов
+| Имя       | Тип                      | Смысл                                                      |
+| --------- | ------------------------ | ---------------------------------------------------------- |
+| Position  | enum                     | Перечисление возможных должностей                          |
+| Employee  | struct                   | Структура, описывающая сотрудника                          |
+| name      | String (поле Employee)   | Имя сотрудника                                             |
+| position  | Position (поле Employee) | Должность сотрудника                                       |
+| salary    | f64 (поле Employee)      | Оклад сотрудника                                           |
+| employees | &[Employee]              | Срез исходного списка сотрудников для фильтрации           |
+| target    | Position                 | Целевая должность для фильтрации                           |
+| e         | &Employee                | Ссылка на текущего сотрудника при фильтрации               |
+| staff     | Vec<Employee>            | Вектор сотрудников в main                                  |
+| testers   | Vec<Employee>            | Вектор сотрудников с должностью tester                     |
+
+### Код программы
+```Rust
+#[derive(Debug, PartialEq, Clone)] 
+enum Position {
+    Manager,
+    Developer,
+    Designer,
+    Tester,
+}
+
+#[derive(Debug, Clone)]
+struct Employee {
+    name: String,
+    position: Position,
+    salary: f64,
+}
+
+fn filter_by_position(employees: &[Employee], target: Position) -> Vec<Employee> {
+    employees
+        .iter()
+        .filter(|e| e.position == target)
+        .cloned()
+        .collect()
+}
+
+fn main() {
+    // Инициализация вектора сотрудников
+    let staff = vec![
+        Employee { name: "Petya".into(),  position: Position::Tester, salary: 50000.0 },
+        Employee { name: "Viktor".into(), position: Position::Manager,   salary: 90000.0 },
+        Employee { name: "Nikita".into(), position: Position::Developer, salary: 100000.0 },
+        Employee { name: "Vitya".into(), position: Position::Designer,  salary: 70000.0 },
+    ];
+
+    let testers = filter_by_position(&staff, Position::Tester); 
+    println!("Testers: {:?}", testers);
+}
+```
+[![image.png](https://i.postimg.cc/y8XsfDyW/image.png)](https://postimg.cc/FYRMzsqQ)
