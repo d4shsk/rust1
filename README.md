@@ -89,3 +89,50 @@ fn main() {
 ```
 ### Результаты выполненной работы
 [![image.png](https://i.postimg.cc/8zC1spVY/image.png)](https://postimg.cc/hfHF5qv8)
+## Задача 4
+### Постановка задачи
+Задайте структуру Car с полями brand, model и year, и создайте несколько экземпляров этой структуры. Выведите информацию о каждой машине на экран.
+### Математическая модель
+--
+### Список идентификаторов
+| Имя              | Тип    | Смысл                               |
+| ---------------- | ------ | ----------------------------------- |
+| Car              | struct | Структура для описания автомобиля   |
+| brand            | String | Поле структуры для хранения бренда. |
+| model            | String | Поле структуры для хранения модели. |
+| year             | u32    | Поле структуры для хранения года.   |
+| car1, car2, car3 | Car    | Экземпляры структуры Car            |
+
+### Код программы
+```Rust
+struct Car {
+    brand: String,
+    model: String,
+    year: u32,
+}
+
+fn main() {
+    let car1 = Car {
+        brand: "Haval".to_string(),
+        model: "Jolion".to_string(),
+        year: 2020,
+    };
+    let car2 = Car {
+        brand: "Toyota".to_string(),
+        model: "Corolla".to_string(),
+        year: 1995,
+    };
+    let car3 = Car {
+        brand: "Ford".to_string(),
+        model: "Focus".to_string(),
+        year: 2007,
+    };
+
+    // Вывод переменных
+    println!("Car 1: {} {} ({})", car1.brand, car1.model, car1.year);
+    println!("Car 2: {} {} ({})", car2.brand, car2.model, car2.year);
+    println!("Car 3: {} {} ({})", car3.brand, car3.model, car3.year);
+}
+```
+### Результаты выполненной работы
+[![image.png](https://i.postimg.cc/L5vcMPh8/image.png)](https://postimg.cc/n9jR4Cvy)
